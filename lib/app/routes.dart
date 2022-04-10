@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:givbooks/views/authentication/authentication.dart';
-import 'package:givbooks/views/home/home.dart';
+import 'package:givbooks/views/home/home_page.dart';
 
 import 'bloc/app_bloc.dart';
 

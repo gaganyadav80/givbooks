@@ -188,8 +188,10 @@ class _LoginButton extends StatelessWidget {
             : BlueButton(
                 key: const Key('loginForm_continue_raisedButton'),
                 title: "Sign In",
-                onPressed: () =>
-                    context.read<LoginCubit>().logInWithCredentials(),
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  return context.read<LoginCubit>().logInWithCredentials();
+                },
               );
       },
     );

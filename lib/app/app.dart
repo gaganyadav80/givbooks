@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:open_library/open_library.dart';
+import 'package:provider/provider.dart';
 
 import 'bloc/app_bloc.dart';
 import 'routes.dart';
@@ -38,42 +40,46 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'Giv Books',
-      debugShowCheckedModeBanner: false,
-      builder: (BuildContext context, Widget? widget) {
-        ScreenUtil.init(
-          BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width,
-            maxHeight: MediaQuery.of(context).size.height,
-          ),
-          designSize: const Size(390, 844),
-          context: context,
-          minTextAdapt: true,
-          orientation: Orientation.portrait,
-        );
-        return widget!;
-      },
-      theme: FlexThemeData.light(
-        transparentStatusBar: false,
-        scheme: FlexScheme.mandyRed,
-        subThemesData: const FlexSubThemesData(),
-        useMaterial3: true,
-        useMaterial3ErrorColors: true,
-      ),
-      // The Mandy red, dark theme.
-      darkTheme: FlexThemeData.dark(
-        transparentStatusBar: false,
-        scheme: FlexScheme.rosewood,
-        subThemesData: const FlexSubThemesData(),
-        useMaterial3: true,
-        useMaterial3ErrorColors: true,
-      ),
-      // Use dark or light theme based on system setting.
-      themeMode: ThemeMode.light,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
+    return Provider(
+      create: (_) => OpenLibrary(),
+      dispose: (_, OpenLibrary service) => service.dispose(),
+      child: GetMaterialApp(
+        title: 'Giv Books',
+        debugShowCheckedModeBanner: false,
+        builder: (BuildContext context, Widget? widget) {
+          ScreenUtil.init(
+            BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width,
+              maxHeight: MediaQuery.of(context).size.height,
+            ),
+            designSize: const Size(390, 844),
+            context: context,
+            minTextAdapt: true,
+            orientation: Orientation.portrait,
+          );
+          return widget!;
+        },
+        theme: FlexThemeData.light(
+          transparentStatusBar: false,
+          scheme: FlexScheme.flutterDash,
+          subThemesData: const FlexSubThemesData(),
+          useMaterial3: true,
+          useMaterial3ErrorColors: true,
+        ),
+        // The Mandy red, dark theme.
+        darkTheme: FlexThemeData.dark(
+          transparentStatusBar: false,
+          scheme: FlexScheme.rosewood,
+          subThemesData: const FlexSubThemesData(),
+          useMaterial3: true,
+          useMaterial3ErrorColors: true,
+        ),
+        // Use dark or light theme based on system setting.
+        themeMode: ThemeMode.light,
+        home: FlowBuilder<AppStatus>(
+          state: context.select((AppBloc bloc) => bloc.state.status),
+          onGeneratePages: onGenerateAppViewPages,
+        ),
       ),
     );
   }

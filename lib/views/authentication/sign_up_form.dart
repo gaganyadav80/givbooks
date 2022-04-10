@@ -224,8 +224,10 @@ class _SignUpButton extends StatelessWidget {
             : BlueButton(
                 key: const Key('signUpForm_continue_raisedButton'),
                 title: "Sign Up",
-                onPressed: () =>
-                    context.read<SignUpCubit>().signUpFormSubmitted(),
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  return context.read<SignUpCubit>().signUpFormSubmitted();
+                },
               );
       },
     );

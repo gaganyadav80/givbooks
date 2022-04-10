@@ -1,8 +1,8 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:form_inputs/form_inputs.dart';
-import 'package:formz/formz.dart';
+import 'package:get/get.dart';
+import 'package:givbooks/utils/utils.dart';
 
 part 'sign_up_state.dart';
 
@@ -16,51 +16,35 @@ class SignUpCubit extends Cubit<SignUpState> {
   }
 
   void emailChanged(String value) {
-    final email = Email.dirty(value);
+    final isEmailValid = value.isEmail;
+
     emit(
       state.copyWith(
-        email: email,
-        status: Formz.validate([
-          email,
-          state.password,
-          state.confirmedPassword,
-        ]),
+        email: value,
+        status: isEmailValid ? FormzStatus.valid : FormzStatus.invalid,
       ),
     );
   }
 
   void passwordChanged(String value) {
-    final password = Password.dirty(value);
-    final confirmedPassword = ConfirmedPassword.dirty(
-      password: password.value,
-      value: state.confirmedPassword.value,
-    );
+    final isPasswordValid = value.length >= 6;
+
     emit(
       state.copyWith(
-        password: password,
-        confirmedPassword: confirmedPassword,
-        status: Formz.validate([
-          state.email,
-          password,
-          confirmedPassword,
-        ]),
+        password: value,
+        confirmedPassword: state.confirmedPassword,
+        status: isPasswordValid ? FormzStatus.valid : FormzStatus.invalid,
       ),
     );
   }
 
   void confirmedPasswordChanged(String value) {
-    final confirmedPassword = ConfirmedPassword.dirty(
-      password: state.password.value,
-      value: value,
-    );
+    final isConfirmedPassValid = value == state.password;
+
     emit(
       state.copyWith(
-        confirmedPassword: confirmedPassword,
-        status: Formz.validate([
-          state.email,
-          state.password,
-          confirmedPassword,
-        ]),
+        confirmedPassword: value,
+        status: isConfirmedPassValid ? FormzStatus.valid : FormzStatus.invalid,
       ),
     );
   }
@@ -71,8 +55,8 @@ class SignUpCubit extends Cubit<SignUpState> {
     try {
       await _authenticationRepository.signUp(
         name: state.name,
-        email: state.email.value,
-        password: state.password.value,
+        email: state.email,
+        password: state.password,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
     } on SignUpWithEmailAndPasswordFailure catch (e) {

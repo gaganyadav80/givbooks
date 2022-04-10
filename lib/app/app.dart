@@ -41,7 +41,21 @@ class AppView extends StatelessWidget {
     return GetMaterialApp(
       title: 'Giv Books',
       debugShowCheckedModeBanner: false,
+      builder: (BuildContext context, Widget? widget) {
+        ScreenUtil.init(
+          BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width,
+            maxHeight: MediaQuery.of(context).size.height,
+          ),
+          designSize: const Size(390, 844),
+          context: context,
+          minTextAdapt: true,
+          orientation: Orientation.portrait,
+        );
+        return widget!;
+      },
       theme: FlexThemeData.light(
+        transparentStatusBar: false,
         scheme: FlexScheme.mandyRed,
         subThemesData: const FlexSubThemesData(),
         useMaterial3: true,
@@ -49,6 +63,7 @@ class AppView extends StatelessWidget {
       ),
       // The Mandy red, dark theme.
       darkTheme: FlexThemeData.dark(
+        transparentStatusBar: false,
         scheme: FlexScheme.rosewood,
         subThemesData: const FlexSubThemesData(),
         useMaterial3: true,

@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:formz/formz.dart';
 import 'package:get/get.dart';
+import 'package:givbooks/utils/utils.dart';
 import 'package:givbooks/widgets/widgets.dart';
 import 'package:velocity_x/velocity_x.dart';
 
@@ -165,7 +165,7 @@ class _PasswordInput extends StatelessWidget {
               : GestureDetector(
                   onTap: () => _isObscure.toggle(),
                   child: const Icon(Icons.visibility_outlined)),
-          errorText: state.password.invalid ? 'invalid password' : null,
+          errorText: state.status.isInvalid ? 'password is too short' : null,
         );
       },
     );
@@ -202,8 +202,7 @@ class _ConfirmPasswordInput extends StatelessWidget {
               : GestureDetector(
                   onTap: () => _isObscure.toggle(),
                   child: const Icon(Icons.visibility_outlined)),
-          errorText:
-              state.confirmedPassword.invalid ? 'passwords do not match' : null,
+          errorText: state.status.isInvalid ? 'passwords do not match' : null,
         );
       },
     );

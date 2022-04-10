@@ -2,11 +2,9 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:formz/formz.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:givbooks/utils/utils.dart';
 
 import 'authentication.dart';
-import 'components/google_button.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,16 +13,6 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ScreenUtil.init(
-      BoxConstraints(
-        maxWidth: MediaQuery.of(context).size.width,
-        maxHeight: MediaQuery.of(context).size.height,
-      ),
-      designSize: const Size(390, 844),
-      context: context,
-      minTextAdapt: true,
-      orientation: Orientation.portrait,
-    );
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,

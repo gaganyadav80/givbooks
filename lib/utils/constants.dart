@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+enum FormzStatus {
+  pure, // FormzInput is empty
+  invalid,
+  valid,
+  submissionCanceled,
+  submissionInProgress,
+  submissionSuccess,
+  submissionFailure,
+}
+
 final kBorderRadius = BorderRadius.circular(12.r);
 
 final kInputBorderStyle = OutlineInputBorder(

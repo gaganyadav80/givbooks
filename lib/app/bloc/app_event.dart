@@ -18,3 +18,12 @@ class AppUserChanged extends AppEvent {
   @override
   List<Object> get props => [user];
 }
+
+class AppUserResetPassword extends AppEvent {
+  const AppUserResetPassword(this.email);
+
+  final String email;
+
+  @override
+  List<Object> get props => [email];
+}

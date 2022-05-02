@@ -18,6 +18,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
+    on<AppUserResetPassword>(_onPasswordResetRequested);
     _userSubscription = _authenticationRepository.user.listen(
       (user) => add(AppUserChanged(user)),
     );
@@ -36,6 +37,11 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
     unawaited(_authenticationRepository.logOut());
+  }
+
+  void _onPasswordResetRequested(
+      AppUserResetPassword event, Emitter<AppState> emit) {
+    unawaited(FirebaseAuth.instance.sendPasswordResetEmail(email: event.email));
   }
 
   @override

@@ -1,14 +1,28 @@
 part of 'search_cubit.dart';
 
 class SearchState extends Equatable {
-  const SearchState({this.books = const <OLBook>[]});
+  const SearchState({
+    this.query = '',
+    this.isLoading = false,
+    this.books = const <bf.Book>[],
+  });
 
-  final List<OLBook> books;
+  final String query;
+  final List<bf.Book> books;
+  final bool isLoading;
 
   @override
-  List<Object> get props => [books];
+  List<Object> get props => [query, books, isLoading];
 
-  SearchState copyWith({List<OLBook>? books}) {
-    return SearchState(books: books ?? this.books);
+  SearchState copyWith({
+    String? query,
+    List<bf.Book>? books,
+    bool? isLoading,
+  }) {
+    return SearchState(
+      query: query ?? this.query,
+      books: books ?? this.books,
+      isLoading: isLoading ?? this.isLoading,
+    );
   }
 }

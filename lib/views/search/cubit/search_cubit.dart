@@ -1,40 +1,27 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:open_library/models/ol_book_model.dart';
-import 'package:open_library/models/ol_search_model.dart';
-import 'package:open_library/open_library.dart';
-import 'package:provider/provider.dart';
+import 'package:books_finder/books_finder.dart' as bf;
 
 part 'search_state.dart';
 
 class SearchCubit extends Cubit<SearchState> {
   SearchCubit() : super(const SearchState());
 
-  void onSearchChanged(String query, BuildContext context) async {
-    final OLSearchBase search =
-        await Provider.of<OpenLibrary>(context, listen: false)
-            .query(q: query, limit: 10);
+  void onSearchChanged(String query) async {
+    emit(state.copyWith(isLoading: true));
 
-    List<OLBook> books = <OLBook>[];
+    final List<bf.Book> books = await bf.queryBooks(
+      query,
+      maxResults: 20,
+      printType: bf.PrintType.books,
+      orderBy: bf.OrderBy.relevance,
+      reschemeImageLinks: true,
+    );
+    emit(state.copyWith(query: query, books: books, isLoading: false));
+  }
 
-    if (search is OLSearch) {
-      books.clear();
-
-      log("search:\n$search");
-
-      for (var doc in search.docs) {
-        final OLBook book = OLBook(
-          title: doc.title,
-          authors: doc.authors,
-          covers: doc.covers,
-        );
-        books.add(book);
-      }
-    }
-
-    emit(state.copyWith(books: books));
+  void clearSearch() {
+    emit(state.copyWith(query: '', books: <bf.Book>[]));
   }
 }

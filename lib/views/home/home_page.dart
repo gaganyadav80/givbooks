@@ -5,6 +5,8 @@ import 'package:givbooks/views/search/cubit/search_cubit.dart';
 import 'package:givbooks/views/search/search_page.dart';
 import 'package:givbooks/views/settings/cubit/settings_cubit.dart';
 import 'package:givbooks/views/settings/settings_page.dart';
+import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
+import 'package:givbooks/views/shelf/shelf_page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class HomePage extends StatelessWidget {
@@ -22,6 +24,9 @@ class HomePage extends StatelessWidget {
         BlocProvider<SearchCubit>(
           create: (_) => SearchCubit(),
         ),
+        BlocProvider<ShelfCubit>(
+          create: (_) => ShelfCubit(),
+        ),
       ],
       child: BlocBuilder<HomeCubit, HomeState>(
         buildWhen: (previous, current) =>
@@ -31,11 +36,14 @@ class HomePage extends StatelessWidget {
             resizeToAvoidBottomInset: false,
             body: Stack(
               children: [
-                <Widget>[
-                  'Shelf'.text.make().centered(),
-                  // const SearchPage(),
-                  const SettingsPage(),
-                ][state.selectedIndex],
+                Padding(
+                  padding: const EdgeInsets.only(top: 70),
+                  child: <Widget>[
+                    const ShelfPage(),
+                    // const SearchPage(),
+                    const SettingsPage(),
+                  ][state.selectedIndex],
+                ),
                 const SearchPage(),
               ],
             ),

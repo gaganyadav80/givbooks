@@ -19,6 +19,11 @@ class SettingsCubit extends HydratedCubit<SettingsState> {
 
   void toggleSearchBar(bool value) {
     emit(state.copyWith(isSearchBarOpened: value));
+
+    Future.delayed(
+      const Duration(milliseconds: 100),
+      () => emit(state.copyWith(showExpandedChild: value)),
+    );
   }
 
   @override

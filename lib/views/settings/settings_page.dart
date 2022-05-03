@@ -21,7 +21,8 @@ class SettingsPage extends StatelessWidget {
       builder: (context, state) {
         return SettingsList(
           applicationType: ApplicationType.cupertino,
-          contentPadding: const EdgeInsets.fromLTRB(5.0, 120.0, 5.0, 0.0),
+          platform: DevicePlatform.iOS,
+          // contentPadding: const EdgeInsets.fromLTRB(5.0, 30.0, 5.0, 0.0),
           sections: [
             SettingsSection(
               tiles: [

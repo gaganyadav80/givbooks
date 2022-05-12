@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:givbooks/views/settings/cubit/settings_cubit.dart';
+import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
 
 import 'bloc/app_bloc.dart';
 import 'routes.dart';
@@ -28,10 +29,10 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AppBloc>(
-            create: (_) =>
-                AppBloc(authenticationRepository: _authenticationRepository),
+            create: (_) => AppBloc(authenticationRepository: _authenticationRepository),
           ),
-          BlocProvider<SettingsCubit>(create: (_) => SettingsCubit())
+          BlocProvider<SettingsCubit>(create: (_) => SettingsCubit()),
+          BlocProvider<ShelfCubit>(create: (_) => ShelfCubit()),
         ],
         child: const AppView(),
       ),
@@ -62,9 +63,7 @@ class AppView extends StatelessWidget {
         useMaterial3: false,
         useMaterial3ErrorColors: true,
       ),
-      initial: context.read<SettingsCubit>().state.isDarkMode
-          ? AdaptiveThemeMode.dark
-          : AdaptiveThemeMode.light,
+      initial: context.read<SettingsCubit>().state.isDarkMode ? AdaptiveThemeMode.dark : AdaptiveThemeMode.light,
       builder: (light, dark) {
         return GetMaterialApp(
           title: 'Giv Books',

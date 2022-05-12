@@ -25,21 +25,15 @@ class HomePage extends StatelessWidget {
         BlocProvider<SearchCubit>(
           create: (_) => SearchCubit(),
         ),
-        BlocProvider<ShelfCubit>(
-          create: (_) => ShelfCubit(),
-        ),
       ],
       child: BlocBuilder<HomeCubit, HomeState>(
-        buildWhen: (previous, current) =>
-            previous.selectedIndex != current.selectedIndex,
+        buildWhen: (previous, current) => previous.selectedIndex != current.selectedIndex,
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
               backgroundColor: Theme.of(context).scaffoldBackgroundColor,
               titleTextStyle: GoogleFonts.roboto(
-                color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.black
-                    : Colors.white,
+                color: Theme.of(context).brightness == Brightness.light ? Colors.black : Colors.white,
                 fontSize: 30.w,
                 fontWeight: FontWeight.bold,
               ),
@@ -60,8 +54,7 @@ class HomePage extends StatelessWidget {
               selectedFontSize: 12.0,
               unselectedFontSize: 12.0,
               elevation: 2.0,
-              onTap: (int index) =>
-                  context.read<HomeCubit>().selectedIndexChanged(index),
+              onTap: (int index) => context.read<HomeCubit>().selectedIndexChanged(index),
               items: const [
                 BottomNavigationBarItem(
                   icon: Icon(LineIcons.swatchbook),

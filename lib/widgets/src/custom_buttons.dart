@@ -22,6 +22,9 @@ class BlueButton extends StatelessWidget {
 
   final Color? backgroundColor;
 
+  final double? width;
+  final EdgeInsets? padding;
+
   const BlueButton({
     Key? key,
     this.title,
@@ -30,6 +33,8 @@ class BlueButton extends StatelessWidget {
     this.child,
     this.height,
     this.backgroundColor,
+    this.width,
+    this.padding,
   }) : super(key: key);
 
   @override
@@ -41,19 +46,18 @@ class BlueButton extends StatelessWidget {
       shadowColor: Theme.of(context).primaryColor.withOpacity(0.5),
       child: SizedBox(
         height: height ?? 60.w,
+        width: width,
         child: TextButton(
           onPressed: onPressed,
           style: TextButton.styleFrom(
             elevation: 0.0,
             backgroundColor: backgroundColor ?? Theme.of(context).primaryColor,
             shape: RoundedRectangleBorder(borderRadius: kBorderRadius),
-            padding: EdgeInsets.symmetric(vertical: 15.w),
+            padding: padding ?? EdgeInsets.symmetric(vertical: 15.w),
             primary: Colors.lightBlue[900],
           ),
           child: Center(
-            child: isLoading
-                ? const CircularLoading(color: Colors.white)
-                : child ?? title!.text.xl.light.white.make(),
+            child: isLoading ? const CircularLoading(color: Colors.white) : child ?? title!.text.xl.light.white.make(),
           ),
         ),
       ),
@@ -76,34 +80,41 @@ class BorderTextButton extends StatelessWidget {
   /// Default value is 60.
   final double? height;
 
+  final double? width;
+  final EdgeInsets? padding;
+
   const BorderTextButton(
       {Key? key,
       this.title,
       required this.onPressed,
       this.isLoading = false,
       this.child,
-      this.height})
+      this.height,
+      this.width,
+      this.padding})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: height ?? 60.w,
+      width: width,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 15.w),
+          padding: padding ?? EdgeInsets.symmetric(vertical: 15.w),
           // color: Theme.of(context).scaffoldBackgroundColor,
           // primary: Theme.of(context).scaffoldBackgroundColor,
           shape: RoundedRectangleBorder(
             borderRadius: kBorderRadius,
-            side: kInputBorderStyle.borderSide,
+            side: BorderSide(
+              width: 1.0,
+              color: context.isDarkMode ? Colors.white70 : Colors.black54,
+            ),
           ),
         ),
         child: Center(
-          child: isLoading
-              ? const CircularLoading()
-              : child ?? title!.text.buttonText(context).make(),
+          child: isLoading ? const CircularLoading() : child ?? title!.text.buttonText(context).make(),
         ),
       ),
     );

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:givbooks/utils/utils.dart';
+import 'package:velocity_x/velocity_x.dart';
 
 import 'cubit/shelf_cubit.dart';
 import 'widgets/add_shelf_dialog.dart';
@@ -36,7 +37,32 @@ class ShelfPage extends StatelessWidget {
                 body: ListView.builder(
                   itemCount: state.shelves.length,
                   itemBuilder: (_, index) {
-                    return ShelfTile(state.shelves[index], context);
+                    return InkWell(
+                      onLongPress: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
+                            title: const Text("Delete Shelf"),
+                            content: const Text("Are you sure you want to delete this shelf?"),
+                            actions: [
+                              TextButton(
+                                child: const Text("Cancel"),
+                                onPressed: () => Navigator.of(context).pop(),
+                              ),
+                              TextButton(
+                                child: const Text("Delete"),
+                                onPressed: () {
+                                  context.read<ShelfCubit>().deleteShelf(state.shelves[index]);
+                                  VxToast.show(context, msg: "Shelf deleted");
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                      child: ShelfTile(state.shelves[index]),
+                    );
                   },
                 ),
                 floatingActionButton: FloatingActionButton(

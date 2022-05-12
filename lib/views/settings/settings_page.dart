@@ -33,8 +33,7 @@ class SettingsPage extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(vertical: 15.0),
                     child: CircleAvatar(
                       backgroundImage: NetworkImage(
-                        user.photo ??
-                            'https://picsum.photos/seed/picsum/200/300',
+                        user.photo ?? 'https://picsum.photos/seed/picsum/200/300',
                       ),
                       radius: 32.r,
                     ),
@@ -58,9 +57,7 @@ class SettingsPage extends StatelessWidget {
                   initialValue: state.isDarkMode,
                   activeSwitchColor: Theme.of(context).primaryColor,
                   leading: const Icon(CupertinoIcons.moon_stars),
-                  onToggle: (value) => context
-                      .read<SettingsCubit>()
-                      .toggleDarkMode(value, context),
+                  onToggle: (value) => context.read<SettingsCubit>().toggleDarkMode(value, context),
                   title: "Dark Mode".text.make(),
                 ),
               ],
@@ -70,13 +67,12 @@ class SettingsPage extends StatelessWidget {
               tiles: [
                 SettingsTile.navigation(
                   title: "Forgot Password?".text.make(),
-                  leading: Icon(CupertinoIcons.padlock),
+                  leading: const Icon(CupertinoIcons.padlock),
                   onPressed: (_) => showDialog(
                     context: context,
                     builder: (context) => AlertDialog(
                       title: const Text("Reset Password"),
-                      content: const Text(
-                          "We will send a password reset link to your email address"),
+                      content: const Text("We will send a password reset link to your email address"),
                       actions: [
                         TextButton(
                           child: const Text("Cancel"),
@@ -85,9 +81,7 @@ class SettingsPage extends StatelessWidget {
                         TextButton(
                           child: const Text("Reset"),
                           onPressed: () {
-                            context
-                                .read<AppBloc>()
-                                .add(AppUserResetPassword(user.email!));
+                            context.read<AppBloc>().add(AppUserResetPassword(user.email!));
                             Navigator.of(context).pop();
                           },
                         ),
@@ -97,7 +91,7 @@ class SettingsPage extends StatelessWidget {
                 ),
                 SettingsTile.navigation(
                   title: "Logout".text.make(),
-                  leading: Icon(CupertinoIcons.person),
+                  leading: const Icon(CupertinoIcons.person),
                   onPressed: (_) => showDialog(
                     context: context,
                     builder: (context) => AlertDialog(

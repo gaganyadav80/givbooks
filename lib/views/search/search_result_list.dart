@@ -1,16 +1,18 @@
+import 'package:books_finder/books_finder.dart' as bf;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:givbooks/utils/utils.dart';
-import 'package:givbooks/views/search/cubit/search_cubit.dart';
-import 'package:books_finder/books_finder.dart' as bf;
-import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
-import 'package:givbooks/views/shelf/widgets/shelf_tile.dart';
-import 'package:givbooks/widgets/widgets.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:velocity_x/velocity_x.dart';
+
+import 'package:givbooks/utils/utils.dart';
+import 'package:givbooks/views/search/cubit/search_cubit.dart';
+import 'package:givbooks/views/shelf/shelf_controller.dart';
+import 'package:givbooks/views/shelf/widgets/shelf_tile.dart';
+import 'package:givbooks/widgets/widgets.dart';
 
 class SearchResultList extends StatelessWidget {
   const SearchResultList({Key? key}) : super(key: key);
@@ -108,24 +110,24 @@ class _ShowAddShelfModel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShelfCubit, ShelfState>(
-      builder: (context, state) {
+    return GetBuilder<ShelfController>(
+      builder: (controller) {
         return Padding(
           padding: EdgeInsets.symmetric(vertical: 10.w),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: List.generate(
-              state.shelves.length,
+              controller.shelves.length,
               (index) {
                 return InkWell(
-                  onTap: () => context.read<ShelfCubit>().addBookToShelf(index, book),
+                  onTap: () => controller.addBookToShelf(index, book),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ShelfTile(state.shelves[index]),
+                      ShelfTile(controller.shelves[index]),
                       Padding(
                         padding: EdgeInsets.only(right: 20.w),
-                        child: state.shelves[index].books.any((element) => element.id == book.id)
+                        child: controller.shelves[index].books.any((element) => element.id == book.id)
                             ? const Icon(LineIcons.check)
                             : const Icon(LineIcons.times),
                       ),

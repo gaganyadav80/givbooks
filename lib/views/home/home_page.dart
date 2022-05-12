@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
+
 import 'package:givbooks/views/home/cubit/home_cubit.dart';
 import 'package:givbooks/views/search/cubit/search_cubit.dart';
 import 'package:givbooks/views/search/search_page.dart';
 import 'package:givbooks/views/settings/settings_page.dart';
-import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
 import 'package:givbooks/views/shelf/shelf_page.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icons.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);

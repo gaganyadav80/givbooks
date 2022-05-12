@@ -1,7 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:givbooks/utils/utils.dart';
 
 import 'authentication.dart';
@@ -35,8 +34,7 @@ class LoginPage extends StatelessWidget {
                 ..hideCurrentSnackBar()
                 ..showSnackBar(
                   SnackBar(
-                    content:
-                        Text(state.errorMessage ?? 'Authentication Failure'),
+                    content: Text(state.errorMessage ?? 'Authentication Failure'),
                   ),
                 );
             }

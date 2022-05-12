@@ -1,17 +1,16 @@
 import 'package:adaptive_theme/adaptive_theme.dart';
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:givbooks/views/settings/cubit/settings_cubit.dart';
-import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
 
 import 'bloc/app_bloc.dart';
 import 'routes.dart';
-
-import 'package:authentication_repository/authentication_repository.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({
@@ -32,7 +31,7 @@ class MyApp extends StatelessWidget {
             create: (_) => AppBloc(authenticationRepository: _authenticationRepository),
           ),
           BlocProvider<SettingsCubit>(create: (_) => SettingsCubit()),
-          BlocProvider<ShelfCubit>(create: (_) => ShelfCubit()),
+          // BlocProvider<ShelfCubit>(create: (_) => ShelfCubit()),
         ],
         child: const AppView(),
       ),

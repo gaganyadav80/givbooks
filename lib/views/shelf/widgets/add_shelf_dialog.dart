@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
+import 'package:givbooks/views/shelf/shelf_controller.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class AddShelfDialog extends StatelessWidget {
@@ -26,7 +25,7 @@ class AddShelfDialog extends StatelessWidget {
               VxToast.show(context, msg: "Please enter shelf name");
               return;
             }
-            rootCtx.read<ShelfCubit>().addShelf(_controller.text);
+            ShelfController.to.addShelf(_controller.text);
             Navigator.of(context).pop();
           },
         ),

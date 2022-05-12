@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:givbooks/views/settings/cubit/settings_cubit.dart';
-import 'package:givbooks/widgets/widgets.dart';
 
 import 'cubit/search_cubit.dart';
 import 'search_result_list.dart';

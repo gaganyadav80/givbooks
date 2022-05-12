@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:givbooks/utils/utils.dart';
+import 'package:get/get.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import 'cubit/shelf_cubit.dart';
+import 'package:givbooks/utils/utils.dart';
+import 'package:givbooks/views/shelf/shelf_controller.dart';
+
 import 'widgets/add_shelf_dialog.dart';
 import 'widgets/shelf_tile.dart';
 
@@ -14,9 +15,9 @@ class ShelfPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ShelfCubit, ShelfState>(
-      builder: (context, state) {
-        return state.shelves.isEmpty
+    return GetBuilder<ShelfController>(
+      builder: (controller) {
+        return controller.shelves.isEmpty
             ? Center(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
@@ -35,7 +36,7 @@ class ShelfPage extends StatelessWidget {
               )
             : Scaffold(
                 body: ListView.builder(
-                  itemCount: state.shelves.length,
+                  itemCount: controller.shelves.length,
                   itemBuilder: (_, index) {
                     return InkWell(
                       onLongPress: () {
@@ -52,7 +53,7 @@ class ShelfPage extends StatelessWidget {
                               TextButton(
                                 child: const Text("Delete"),
                                 onPressed: () {
-                                  context.read<ShelfCubit>().deleteShelf(state.shelves[index]);
+                                  controller.deleteShelf(controller.shelves[index]);
                                   VxToast.show(context, msg: "Shelf deleted");
                                   Navigator.of(context).pop();
                                 },
@@ -61,7 +62,7 @@ class ShelfPage extends StatelessWidget {
                           ),
                         );
                       },
-                      child: ShelfTile(state.shelves[index]),
+                      child: ShelfTile(controller.shelves[index]),
                     );
                   },
                 ),
@@ -103,7 +104,7 @@ class _ShelfModal extends StatelessWidget {
                 style: TextStyle(fontWeight: FontWeight.w300),
               ),
               onTap: () {
-                rootCtx.read<ShelfCubit>().addDefaultShelf();
+                ShelfController.to.addDefaultShelf();
                 Navigator.of(context).pop();
               },
             ),

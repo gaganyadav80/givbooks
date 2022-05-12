@@ -22,7 +22,9 @@ class SettingsPage extends StatelessWidget {
         return SettingsList(
           applicationType: ApplicationType.cupertino,
           platform: DevicePlatform.iOS,
-          // contentPadding: const EdgeInsets.fromLTRB(5.0, 30.0, 5.0, 0.0),
+          darkTheme: SettingsThemeData(
+            settingsListBackground: Theme.of(context).scaffoldBackgroundColor,
+          ),
           sections: [
             SettingsSection(
               tiles: [

@@ -61,8 +61,9 @@ class _ShelfModal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+        borderRadius: BorderRadius.vertical(top: Radius.circular(1.r)),
       ),
+      elevation: 0.0,
       child: Padding(
         padding: EdgeInsets.all(10.w),
         child: Column(

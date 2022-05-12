@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:givbooks/views/home/cubit/home_cubit.dart';
 import 'package:givbooks/views/search/cubit/search_cubit.dart';
 import 'package:givbooks/views/search/search_page.dart';
-import 'package:givbooks/views/settings/cubit/settings_cubit.dart';
 import 'package:givbooks/views/settings/settings_page.dart';
 import 'package:givbooks/views/shelf/cubit/shelf_cubit.dart';
 import 'package:givbooks/views/shelf/shelf_page.dart';
-import 'package:velocity_x/velocity_x.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:line_icons/line_icons.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -33,31 +34,47 @@ class HomePage extends StatelessWidget {
             previous.selectedIndex != current.selectedIndex,
         builder: (context, state) {
           return Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: Stack(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 70),
-                  child: <Widget>[
-                    const ShelfPage(),
-                    // const SearchPage(),
-                    const SettingsPage(),
-                  ][state.selectedIndex],
-                ),
-                const SearchPage(),
-              ],
+            appBar: AppBar(
+              backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+              titleTextStyle: GoogleFonts.roboto(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.black
+                    : Colors.white,
+                fontSize: 30.w,
+                fontWeight: FontWeight.bold,
+              ),
+              title: [
+                const Text('Shelf'),
+                const Text('Search'),
+                const Text('Settings'),
+              ][state.selectedIndex],
             ),
-            bottomNavigationBar: NavigationBar(
-              backgroundColor: Theme.of(context).primaryColor.withOpacity(0.1),
-              selectedIndex: state.selectedIndex,
-              onDestinationSelected: (int index) =>
+            resizeToAvoidBottomInset: false,
+            body: <Widget>[
+              const ShelfPage(),
+              const SearchPage(),
+              const SettingsPage(),
+            ][state.selectedIndex],
+            bottomNavigationBar: BottomNavigationBar(
+              currentIndex: state.selectedIndex,
+              selectedFontSize: 12.0,
+              unselectedFontSize: 12.0,
+              elevation: 2.0,
+              onTap: (int index) =>
                   context.read<HomeCubit>().selectedIndexChanged(index),
-              destinations: const [
-                NavigationDestination(icon: Icon(Icons.book), label: 'Shelf'),
-                // NavigationDestination(
-                //     icon: Icon(Icons.search), label: 'Search'),
-                NavigationDestination(
-                    icon: Icon(Icons.settings), label: 'Settings'),
+              items: const [
+                BottomNavigationBarItem(
+                  icon: Icon(LineIcons.swatchbook),
+                  label: 'Shelf',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(LineIcons.search),
+                  label: 'Search',
+                ),
+                BottomNavigationBarItem(
+                  icon: Icon(LineIcons.horizontalSliders),
+                  label: 'Settings',
+                ),
               ],
             ),
           );

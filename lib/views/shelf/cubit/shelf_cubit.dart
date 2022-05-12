@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:givbooks/views/shelf/model/shelf_model.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -30,11 +32,11 @@ class ShelfCubit extends HydratedCubit<ShelfState> {
 
   @override
   ShelfState? fromJson(Map<String, dynamic> json) {
-    return ShelfState(shelves: json['shelves'] as List<ShelfModel>);
+    return ShelfState.fromMap(json);
   }
 
   @override
   Map<String, dynamic>? toJson(ShelfState state) {
-    return <String, dynamic>{'shelves': state.shelves};
+    return state.toMap();
   }
 }

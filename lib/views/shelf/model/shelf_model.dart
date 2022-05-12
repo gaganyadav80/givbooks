@@ -25,17 +25,20 @@ class ShelfModel extends Equatable {
     );
   }
 
+  @override
+  String toString() => 'ShelfModel(name: $name, books: $books)';
+
   Map<String, dynamic> toMap() {
     return {
       'name': name,
-      'books': books,
+      'books': books.map((x) => x.toJson()).toList(),
     };
   }
 
   factory ShelfModel.fromMap(Map<String, dynamic> map) {
     return ShelfModel(
       name: map['name'] ?? '',
-      books: List<bf.Book>.from(map['books'] ?? []),
+      books: List<bf.Book>.from(map['books']?.map((x) => bf.Book.fromJson(x))),
     );
   }
 
@@ -43,7 +46,4 @@ class ShelfModel extends Equatable {
 
   factory ShelfModel.fromJson(String source) =>
       ShelfModel.fromMap(json.decode(source));
-
-  @override
-  String toString() => 'ShelfModel(name: $name, books: $books)';
 }

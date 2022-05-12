@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:givbooks/utils/utils.dart';
 import 'package:givbooks/widgets/widgets.dart';
+import 'package:line_icons/line_icons.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 import 'authentication.dart';
@@ -46,7 +47,7 @@ class LoginForm extends StatelessWidget {
       },
       child: ListView(
         children: [
-          SizedBox(height: 50.w),
+          VSpace(50.w),
           Container(
             margin: EdgeInsets.symmetric(horizontal: 30.w),
             child: Column(
@@ -54,37 +55,42 @@ class LoginForm extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                'Welcome'.text.headline1(context).size(38.w).light.make(),
-                SizedBox(height: 33.w),
-                Column(
-                  mainAxisSize: MainAxisSize.min,
+                'Welcome'.text.size(38.w).extraBlack.make(),
+                <Widget>[
+                  'New here?'.text.size(18.w).make(),
+                  TextButton(
+                    onPressed: () =>
+                        Navigator.of(context).push<void>(SignUpPage.route()),
+                    child: 'Create a new account.'
+                        .text
+                        .size(14.w)
+                        .color(Theme.of(context).primaryColor)
+                        .make(),
+                  ).centered(),
+                ].hStack(),
+                VSpace(25.w),
+                // const LoginForm(),
+                _EmailInput(),
+                VSpace(22.w),
+                _PasswordInput(),
+                VSpace(12.w),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    _EmailInput(),
-                    VSpace(22.w),
-                    _PasswordInput(),
-                    VSpace(12.w),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () => _onForgetPasswordPressed(context),
-                          child:
-                              'Forgot Password?'.text.caption(context).make(),
-                        ),
-                      ],
+                    TextButton(
+                      onPressed: () => _onForgetPasswordPressed(context),
+                      child: Text(
+                        "Forgot Password?",
+                        style: TextStyle(fontSize: 12.w, color: Colors.black),
+                      ),
                     ),
-                    VSpace(12.w),
-                    _LoginButton(),
                   ],
                 ),
-                VSpace(20.w),
-                'or connect with'
-                    .text
-                    .headline4(context)
-                    .size(13.w)
-                    .make()
-                    .centered(),
-                VSpace(10.w),
+                VSpace(12.w),
+                _LoginButton(),
+                VSpace(32.w),
+                'or connect with'.text.size(14.w).make().centered(),
+                VSpace(16.w),
                 Hero(
                   tag: 'google-button',
                   child: GoogleButton(
@@ -93,23 +99,77 @@ class LoginForm extends StatelessWidget {
                         context.read<LoginCubit>().logInWithGoogle(),
                   ),
                 ),
-                VSpace(100.w),
-                TextButton(
-                  onPressed: () =>
-                      Navigator.of(context).push<void>(SignUpPage.route()),
-                  child: 'Create a new account.'
-                      .text
-                      .caption(context)
-                      .size(14.w)
-                      .semiBold
-                      .make(),
-                ).centered(),
-                // SizedBox(height: screenHeight * 0.045), //30
               ],
             ),
           ),
         ],
       ),
+      // child: ListView(
+      //   children: [
+      //     SizedBox(height: 50.w),
+      //     Container(
+      //       margin: EdgeInsets.symmetric(horizontal: 30.w),
+      //       child: Column(
+      //         mainAxisAlignment: MainAxisAlignment.start,
+      //         mainAxisSize: MainAxisSize.min,
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: [
+      //           'Welcome'.text.headline1(context).size(38.w).light.make(),
+      //           SizedBox(height: 33.w),
+      //           Column(
+      //             mainAxisSize: MainAxisSize.min,
+      //             children: [
+      //               _EmailInput(),
+      //               VSpace(22.w),
+      //               _PasswordInput(),
+      //               VSpace(12.w),
+      //               Row(
+      //                 mainAxisAlignment: MainAxisAlignment.end,
+      //                 children: [
+      //                   TextButton(
+      //                     onPressed: () => _onForgetPasswordPressed(context),
+      //                     child:
+      //                         'Forgot Password?'.text.caption(context).make(),
+      //                   ),
+      //                 ],
+      //               ),
+      //               VSpace(12.w),
+      //               _LoginButton(),
+      //             ],
+      //           ),
+      //           VSpace(20.w),
+      //           'or connect with'
+      //               .text
+      //               .headline4(context)
+      //               .size(13.w)
+      //               .make()
+      //               .centered(),
+      //           VSpace(10.w),
+      //           Hero(
+      //             tag: 'google-button',
+      //             child: GoogleButton(
+      //               title: "Continue with Google",
+      //               onPressed: () =>
+      //                   context.read<LoginCubit>().logInWithGoogle(),
+      //             ),
+      //           ),
+      //           VSpace(100.w),
+      //           TextButton(
+      //             onPressed: () =>
+      //                 Navigator.of(context).push<void>(SignUpPage.route()),
+      //             child: 'Create a new account.'
+      //                 .text
+      //                 .caption(context)
+      //                 .size(14.w)
+      //                 .semiBold
+      //                 .make(),
+      //           ).centered(),
+      //           // SizedBox(height: screenHeight * 0.045), //30
+      //         ],
+      //       ),
+      //     ),
+      //   ],
+      // ),
     );
   }
 }
@@ -130,7 +190,7 @@ class _EmailInput extends StatelessWidget {
           hintText: 'Email',
           keyboardType: TextInputType.emailAddress,
           // validator: _validator.validateEmail,
-          prefixIcon: const Icon(Icons.email_outlined),
+          prefixIcon: const Icon(LineIcons.envelope),
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           errorText: state.status.isInvalid ? 'invalid email' : null,
         );
@@ -155,17 +215,17 @@ class _PasswordInput extends StatelessWidget {
                   context.read<LoginCubit>().passwordChanged(password),
               maxLines: 1,
               hintText: 'Password',
-              prefixIcon: const Icon(Icons.lock_outline),
+              prefixIcon: const Icon(LineIcons.lock),
               keyboardType: TextInputType.text,
               obscureText: _isObscure.value,
               suffix: _isObscure.value
                   ? GestureDetector(
                       onTap: () => _isObscure.toggle(),
-                      child: const Icon(Icons.visibility_off_outlined),
+                      child: const Icon(LineIcons.eyeSlash, color: Colors.grey),
                     )
                   : GestureDetector(
                       onTap: () => _isObscure.toggle(),
-                      child: const Icon(Icons.visibility_outlined),
+                      child: const Icon(LineIcons.eye),
                     ),
             ));
       },
@@ -190,7 +250,7 @@ class _LoginButton extends StatelessWidget {
                 title: "Sign In",
                 onPressed: () {
                   FocusScope.of(context).unfocus();
-                  return context.read<LoginCubit>().logInWithCredentials();
+                  context.read<LoginCubit>().logInWithCredentials();
                 },
               );
       },

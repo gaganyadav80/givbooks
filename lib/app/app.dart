@@ -49,18 +49,18 @@ class AppView extends StatelessWidget {
     return AdaptiveTheme(
       light: FlexThemeData.light(
         transparentStatusBar: false,
-        scheme: FlexScheme.rosewood,
+        scheme: FlexScheme.blue,
         subThemesData: const FlexSubThemesData(),
         scaffoldBackground: const Color(0xffF2F2F6),
-        useMaterial3: true,
-        useMaterial3ErrorColors: true,
+        // useMaterial3: true,
+        // useMaterial3ErrorColors: true,
       ),
       dark: FlexThemeData.dark(
         transparentStatusBar: false,
-        scheme: FlexScheme.rosewood,
+        scheme: FlexScheme.blue,
         subThemesData: const FlexSubThemesData(),
-        useMaterial3: true,
-        useMaterial3ErrorColors: true,
+        // useMaterial3: true,
+        // useMaterial3ErrorColors: true,
       ),
       initial: context.read<SettingsCubit>().state.isDarkMode
           ? AdaptiveThemeMode.dark

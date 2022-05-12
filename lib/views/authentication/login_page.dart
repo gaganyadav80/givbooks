@@ -26,25 +26,22 @@ class LoginPage extends StatelessWidget {
         //       )
         //     : null,
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8.w),
-        child: BlocProvider(
-          create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
-          child: BlocListener<LoginCubit, LoginState>(
-            listener: (context, state) {
-              if (state.status.isSubmissionFailure) {
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(
-                    SnackBar(
-                      content:
-                          Text(state.errorMessage ?? 'Authentication Failure'),
-                    ),
-                  );
-              }
-            },
-            child: const LoginForm(),
-          ),
+      body: BlocProvider(
+        create: (_) => LoginCubit(context.read<AuthenticationRepository>()),
+        child: BlocListener<LoginCubit, LoginState>(
+          listener: (context, state) {
+            if (state.status.isSubmissionFailure) {
+              ScaffoldMessenger.of(context)
+                ..hideCurrentSnackBar()
+                ..showSnackBar(
+                  SnackBar(
+                    content:
+                        Text(state.errorMessage ?? 'Authentication Failure'),
+                  ),
+                );
+            }
+          },
+          child: const LoginForm(),
         ),
       ),
     );

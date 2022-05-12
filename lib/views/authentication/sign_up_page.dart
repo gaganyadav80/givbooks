@@ -2,6 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:line_icons/line_icons.dart';
 
 import 'authentication.dart';
 
@@ -20,7 +21,7 @@ class SignUpPage extends StatelessWidget {
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         leading: InkWell(
           onTap: () => Navigator.pop(context),
-          child: const Icon(CupertinoIcons.back, color: Colors.black),
+          child: const Icon(LineIcons.arrowLeft, color: Colors.black),
         ),
       ),
       body: Padding(

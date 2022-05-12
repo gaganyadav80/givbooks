@@ -11,13 +11,14 @@ enum FormzStatus {
   submissionFailure,
 }
 
-final kBorderRadius = BorderRadius.circular(12.r);
+final kBorderRadius = BorderRadius.circular(1.r);
 
 final kInputBorderStyle = OutlineInputBorder(
   borderRadius: kBorderRadius,
-  borderSide: BorderSide(
+  borderSide: const BorderSide(
     width: 1.0,
-    color: Colors.grey[500]!.withOpacity(0.5),
+    // color: Colors.grey[400]!,
+    color: Colors.black54,
   ),
 );
 
